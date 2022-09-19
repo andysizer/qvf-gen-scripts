@@ -3,8 +3,6 @@
 index-state: 2022-04-28T09:22:25Z
 
 packages:
-    quadraticVoting
-    qvf-cli
     qvf-generate-scripts
 
 -- flags for the plutonomy optimizer
@@ -13,18 +11,10 @@ flags:      +plutus-4710dff2e
 -- You never, ever, want this.
 write-ghc-environment-files: never
 
--- Always build tests and benchmarks.
-tests: true
-benchmarks: true
-
--- The following sections are copied from the 'plutus-apps' repository cabal.project at the revision
--- given above.
--- This is necessary because the  'plutus-apps' libraries depend on a number of other libraries which are
--- not on Hackage, and so need to be pulled in as `source-repository-package`s themselves. Make sure to
--- re-update this section from the template when you do an upgrade.
-
+-- set -O2 as default
 optimization: 2
 
+-- minimize exe size
 split-sections: true
 
 -- Always build tests and benchmarks.
@@ -89,31 +79,20 @@ package cardano-wallet-launcher
 package cardano-wallet-core-integration
   optimization: False
 
--- Direct dependency.
--- This reflects the packages stanza from plutus-apps/cabal.project
+-- Used by Tokens.hs
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/plutus-apps
   -- the v2022-04-06 release
   tag: 14bed17e8608162ee81969e482c1815fb78bd7b0
-  subdir: 
+  subdir:
     freer-extras
-    playground-common
-    plutus-chain-index
     plutus-chain-index-core
-    plutus-contract
-    plutus-contract-certification
+    plutus-contract 
     plutus-ledger
     plutus-ledger-constraints
-    plutus-pab
-    plutus-pab-executables
-    plutus-playground-server
-    plutus-use-cases
-    quickcheck-dynamic
-    web-ghc
   --sha256: 1l24wcmd8g0854bbnxsi03gr9jv96r337hjailg5rgb7gmchrias
 
--- Direct dependency.
 -- Are you thinking of updating this tag to some other commit?
 -- Please ensure that the commit you are about to use is the latest one from
 -- the *develop* branch of this repo:
@@ -136,8 +115,7 @@ source-repository-package
     plugins/backend-monitoring
     plugins/backend-trace-forwarder
   --sha256: 1il8fx3misp3650ryj368b3x95ksz01zz3x0z9k00807j93d0ka0
-
--- Should follow cardano-node.
+  
 -- However, the following hash follows a later commit hash than cardano-node's
 -- because we currently need some Data instances that are not backported.
 -- In the next cardano-node release (>1.34.1), we should use the same commit hash.
@@ -155,33 +133,12 @@ source-repository-package
     stubs/plutus-ghc-stub
     word-array
 
--- Should follow cardano-node
-source-repository-package
-  type: git
-  location: https://github.com/input-output-hk/ekg-forward
-  tag: 297cd9db5074339a2fb2e5ae7d0780debb670c63
-  --sha256: 1zcwry3y5rmd9lgxy89wsb3k4kpffqji35dc7ghzbz603y1gy24g
-
--- Should follow plutus.
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/flat
   tag: ee59880f47ab835dbd73bea0847dab7869fc20d8
   --sha256: 1lrzknw765pz2j97nvv9ip3l1mcpf2zr4n56hwlz0rk7wq7ls4cm
 
-source-repository-package
-  type: git
-  location: https://github.com/input-output-hk/servant-purescript
-  tag: 44e7cacf109f84984cd99cd3faf185d161826963
-  --sha256: 10pb0yfp80jhb9ryn65a4rha2lxzsn2vlhcc6xphrrkf4x5lhzqc
-
-source-repository-package
-  type: git
-  location: https://github.com/input-output-hk/purescript-bridge
-  tag: 47a1f11825a0f9445e0f98792f79172efef66c00
-  --sha256: 0da1vn2l6iyfxcjk58qal1l4755v92zi6yppmjmqvxf1gacyf9px
-
--- Direct dependency.
 -- Compared to others, cardano-wallet doesn't bump dependencies very often.
 -- Making it a good place to start when bumping dependencies.
 -- As, for example, bumping the node first highly risks breaking API with the wallet.
@@ -203,9 +160,10 @@ source-repository-package
     lib/test-utils
     lib/text-class
   --sha256: 0gb3zyv3q5v5sd8r29s02yc0brwq5a01is9c0n528391n2r8g1yy
-
+  
 -- Should follow cardano-wallet.
 -- Currently tracking v1.34.1.
+-- TODO !@! needs updating
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/cardano-node
@@ -213,26 +171,6 @@ source-repository-package
   --sha256: 1hh53whcj5y9kw4qpkiza7rmkniz18r493vv4dzl1a8r5fy3b2bv
   subdir:
     cardano-api
-    cardano-cli
-    cardano-git-rev
-    cardano-node
-    cardano-testnet
-    trace-dispatcher
-    trace-forward
-    trace-resources
-
-source-repository-package
-  type: git
-  location: https://github.com/input-output-hk/cardano-config
-  tag: e9de7a2cf70796f6ff26eac9f9540184ded0e4e6
-  --sha256: 1wm1c99r5zvz22pdl8nhkp13falvqmj8dgkm8fxskwa9ydqz01ld
-
--- Using a fork until our patches can be merged upstream
-source-repository-package
-  type: git
-  location: https://github.com/input-output-hk/optparse-applicative
-  tag: 7497a29cb998721a9068d5725d49461f2bba0e7a
-  --sha256: 1gvsrg925vynwgqwplgjmp53vj953qyh3wbdf34pw21c8r47w35r
 
 source-repository-package
   type: git
@@ -267,7 +205,6 @@ source-repository-package
     libs/small-steps-test
   --sha256: 0avzyiqq0m8njd41ck9kpn992yq676b1az9xs77977h7cf85y4wm
 
--- Should follow cardano-wallet.
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/ouroboros-network
@@ -291,8 +228,7 @@ source-repository-package
     typed-protocols-cborg
     typed-protocols-examples
   --sha256: 1b43vbdsr9m3ry1kgag2p2ixpv54gw7a4vvmndxl6knqg8qbsb8b
-
--- Should follow cardano-wallet.
+  
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/cardano-base
@@ -309,7 +245,6 @@ source-repository-package
     strict-containers
   --sha256: 0icq9y3nnl42fz536da84414av36g37894qnyw4rk3qkalksqwir
 
--- Should follow cardano-wallet.
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/cardano-prelude
@@ -319,14 +254,12 @@ source-repository-package
     cardano-prelude-test
   --sha256: 00h10l5mmiza9819p9v5q5749nb9pzgi20vpzpy1d34zmh6gf1cj
 
--- Should follow cardano-wallet.
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/cardano-crypto
   tag: f73079303f663e028288f9f4a9e08bcca39a923e
   --sha256: 1n87i15x54s0cjkh3nsxs4r1x016cdw1fypwmr68936n3xxsjn6q
 
--- Should follow cardano-wallet.
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/cardano-addresses
@@ -336,14 +269,12 @@ source-repository-package
     core
   --sha256: 11dl3fmq7ry5wdmz8kw07ji8yvrxnrsf7pgilw5q9mi4aqyvnaqk
 
--- Should follow cardano-wallet.
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/goblins
   tag: cde90a2b27f79187ca8310b6549331e59595e7ba
   --sha256: 17c88rbva3iw82yg9srlxjv2ia5wjb9cyqw44hik565f5v9svnyg
 
--- Should follow cardano-wallet.
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/Win32-network
@@ -368,3 +299,13 @@ source-repository-package
   location: https://github.com/input-output-hk/quickcheck-dynamic
   tag: c272906361471d684440f76c297e29ab760f6a1e
   --sha256: 1b9ppgavqad78a2z1zxv7v4jasjz6zz0mxkr0zx0bbcd0i00jajf
+
+source-repository-package
+  type: git
+  location: https://github.com/Snapbrillia/quadraticvoting
+  tag: 7fdd6169114913717f21819e656247c418cf862e
+  subdir:
+    quadraticVoting
+  --sha256: 0i433qylnhdlc9ds9h17169hyvbprwy82rh60mc3ayvv2wa2fahj
+
+

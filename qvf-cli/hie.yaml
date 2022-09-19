@@ -1,8 +1,0 @@
-cradle:
-  cabal:
-    - path: "./app"
-      component: "exe:qvf-cli"
-      
-    - path: "./app/Paths_qvf_cli.hs"
-      component: "exe:qvf-cli"
-    

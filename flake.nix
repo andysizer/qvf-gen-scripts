@@ -1,5 +1,5 @@
 {
-  description = "Snapbrillia Quadratic Voting";
+  description = "QVF generate scripts lambda function";
 
   inputs = {
     # IMPORTANT: report any change to nixpkgs channel in nix/default.nix:
@@ -203,9 +203,9 @@
       inherit jobs qvf-generate-scripts-static qvf-generate-scripts ;
 
       overlay = final: prev: {
-        quadraticvoting-project = flake.project.${final.system};
-        quadraticvoting-packages = mkQvfPackages final.quadraticvoting-project;
-        inherit (final.quadraticvoting-packages) qvf-cli quadraticVoting;
+        qvf-generate-scripts-project = flake.project.${final.system};
+        qvf-generate-scripts-packages = mkQvfPackages final.qvf-generate-scripts-project;
+        inherit (final.qvf-generate-scripts-packages) qvf-cli qvf-generate-scripts;
       };
     };
 }

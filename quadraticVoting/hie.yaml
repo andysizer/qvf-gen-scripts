@@ -1,8 +1,0 @@
-cradle:
-  cabal:
-    - path: "./src"
-      component: "lib:quadraticVoting"
-
-    - path: "./src/Paths_quadraticVoting.hs"
-      component: "lib:Paths_quadraticVoting"
-    

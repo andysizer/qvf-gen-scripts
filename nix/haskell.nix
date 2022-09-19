@@ -28,10 +28,10 @@ haskell-nix.cabalProject' ({ pkgs
         ''${haskell-language-server}/bin/haskell-language-server "$@"'';
   in
   {
-  name = "quadraticvoting";
+  name = "qvf-generate-scripts";
   src = haskellLib.cleanSourceWith {
     src = ../.;
-    name = "quadraticvoting-src";
+    name = "qvf-generate-scripts-src";
     filter = name: type: (lib.cleanSourceFilter name type)
       && (haskell-nix.haskellSourceFilter name type)
       # removes socket files

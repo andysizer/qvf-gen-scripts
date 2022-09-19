@@ -3,7 +3,7 @@ let defaultCustomConfig = import ./nix/custom-config.nix defaultCustomConfig;
 # It just takes the shell attribute from default.nix.
 in
 { withHoogle ? defaultCustomConfig.withHoogle
-, profileName ? defaultCustomConfig.localCluster.profileName
+, profileName ? "default"
 , useCabalRun ? true
 , customConfig ? {
     inherit withHoogle;
@@ -18,9 +18,9 @@ let
   inherit (pkgs) customConfig;
   inherit (customConfig) withHoogle localCluster;
   inherit (pkgs.haskell-nix) haskellLib;
-  project = if profiled then quadraticvoting-project.profiled else quadraticvoting-project;
+  project = if profiled then qvf-generate-scripts-project.profiled else qvf-generate-scripts-project;
 
-  ## The default shell is defined by flake.nix: (quadraticvoting-project = flake.project.${final.system})
+  ## The default shell is defined by flake.nix: (qvf-generate-scripts-project = flake.project.${final.system})
   inherit (project) shell;
 
   ## XXX: remove this once people retrain their muscle memory:

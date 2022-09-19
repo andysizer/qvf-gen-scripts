@@ -1,11 +1,11 @@
 cradle:
   cabal:
-    - path: "./src"
+    - path: "./qvf-generate-scripts/src"
       component: "lib:qvf-generate-scripts"
       
-    - path: "./app"
+    - path: "./qvf-generate-scripts/app"
       component: "exe:qvf-generate-scripts"
       
-    - path: "./app/Paths_quadraticVoting.hs"
+    - path: "./qvf-generate-scripts/app/Paths_qvf_generate_scripts.hs"
       component: "exe:qvf-generate-scripts"
     
